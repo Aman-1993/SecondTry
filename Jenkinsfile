@@ -41,7 +41,7 @@ pipeline {
         stage('Deploy') {
             steps {
 		sh "ssh dockeradmin@${ENVIRONMENT} 'rm -rf /home/dockeradmin/*'"
-                sh "scp -r /var/lib/jenkins/workspace/temp-pipeline_dev/webapp/target/webapp.war /var/lib/jenkins/workspace/temp-pipeline_dev/Dockerfile dockeradmin@${ENVIRONMENT}:/home/dockeradmin"
+                sh "scp -r /var/lib/jenkins/workspace/temp-pipeline_dev/webapp-1.0-SNAPSHOT/target/webapp-1.0-SNAPSHOT.war /var/lib/jenkins/workspace/temp-pipeline_dev/Dockerfile dockeradmin@${ENVIRONMENT}:/home/dockeradmin"
                 sh "ssh dockeradmin@${ENVIRONMENT} 'cd /home/dockeradmin && docker stop hello-world-container && docker rm hello-world-container && docker rmi hello-world-image && docker build -t hello-world-image . && docker run -d --name hello-world-container -p 8080:8080 hello-world-image;'"
             }
         }
